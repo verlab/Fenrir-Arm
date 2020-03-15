@@ -34,6 +34,6 @@ Run the kaku_driver.launch file with:
 $ roslaunch fenrir kaku_driver.launch
 ```
 
-## 3D Parts Files
+## 3D Part Files
 
 The full 3D assembly of the arm can be found at: https://a360.co/3aX4rV5
