@@ -5,6 +5,7 @@ We make available all the necessary 3D parts and libraries for communicating wit
 
 ## Dependecies
 - ROS Kinect (http://wiki.ros.org/kinetic/Installation)
+- Dynamixel SDK (http://wiki.ros.org/dynamixel_sdk)
 
 ## Installation
 - Using git (or download the zip file) clone this repository into the "source code" folder of your ROS workspace (e.g. ~/catkin_ws/src ).
