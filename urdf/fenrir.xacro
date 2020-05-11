@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<robot name="Fenrir" xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:include filename="$(find fenrir)/urdf/fenrir_macro.xacro"/>
+  <xacro:fenrir prefix=""/>
+</robot>

@@ -52,11 +52,13 @@ Wrist:
   Return_Delay_Time: 100
   Min_Position: 0
   Max_Position: 1023
+  Max_Torque: 200
+  Torque_Limit: 200
 
-# Gripper:
-#   ID: 7
-#   Protocol: 1
-#   Return_Delay_Time: 100
-#   Min_Position: 0
-#   Max_Position: 1023
+Gripper:
+  ID: 7
+  Protocol: 1
+  Return_Delay_Time: 100
+  Min_Position: 0
+  Max_Position: 1023
 

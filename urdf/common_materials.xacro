@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:include filename="$(find fenrir)/urdf/common_colors.xacro"/>
+
+  <xacro:macro name="material_fenrir_orange">
+    <material name="">
+      <color rgba="${color_fenrir_orange}"/>
+    </material>
+  </xacro:macro>
+
+  <xacro:macro name="material_fenrir_black">
+    <material name="">
+      <color rgba="${color_fenrir_black}"/>
+    </material>
+  </xacro:macro>
+
+</robot>

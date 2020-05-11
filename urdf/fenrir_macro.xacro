@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:include filename="$(find fenrir)/urdf/common_materials.xacro"/>
+
+  <xacro:macro name="fenrir" params="prefix">
+    <link name="${prefix}base_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/base_link.stl"/>
+        </geometry>
+        <xacro:material_fenrir_black/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/base_link.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}disk">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/disk.stl"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/disk.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}lower_arm">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/lower_arm.stl"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/lower_arm.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}forearm">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/forearm.stl"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/forearm.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}end_effector">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/end_effector.stl"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/end_effector.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- joints: main serial chain -->
+    <joint name="${prefix}base" type="revolute">
+      <origin xyz="0 0 0.200" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}disk"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.967" upper="2.967" effort="0" velocity="4.01"/>
+    </joint>
+
+    <joint name="${prefix}sholder" type="revolute">
+      <origin xyz="0 0 0.600" rpy="0 0 0"/>
+      <parent link="${prefix}disk"/>
+      <child link="${prefix}lower_arm"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-1.57" upper="2.79" effort="0" velocity="3.93"/>
+    </joint>
+
+    <joint name="${prefix}elbow" type="revolute">
+      <origin xyz="0 0 0.450" rpy="0 0 0"/>
+      <parent link="${prefix}lower_arm"/>
+      <child link="${prefix}forearm"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-3.14" upper="4.66" effort="0" velocity="4.01"/>
+    </joint>
+
+    <joint name="${prefix}wrist" type="revolute">
+      <origin xyz="0 0 0.200" rpy="0 0 0"/>
+      <parent link="${prefix}forearm"/>
+      <child link="${prefix}end_effector"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-3.31" upper="3.31" effort="0" velocity="7.50"/>
+    </joint>
+
+  </xacro:macro>
+</robot>
+

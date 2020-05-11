@@ -1,5 +1,6 @@
 from dynamixel_sdk.port_handler import *
 from dynamixel_sdk.packet_handler import *
+from colors import *
 
 
 class ModelFlag:
@@ -41,6 +42,7 @@ class Dynamixel:
             "Shutdown": ModelFlag(18, 1),
             "Torque_Enabled": ModelFlag(24, 1),
             "Goal_Position": ModelFlag(30, 2),
+            "Torque_Limit": ModelFlag(34, 2),
             "Present_Position": ModelFlag(36, 2),
             "Present_Velocity": ModelFlag(38, 2),
             "Present_Load": ModelFlag(40, 2),
@@ -86,8 +88,11 @@ class Dynamixel:
 
         else:
             model = "MX-64" if dxl_model_number == 311 else "AX-12"
-            print "Found dynamixel [ID:%03d] with model : %s" % (
-                self.id, model)
+            if model == "MX-64":
+                printC(MX64)
+            elif model == "AX-12":
+                printC(AX12)
+            print "-> [ID:%03d]" % (self.id)
 
         self.model = None
         if dxl_model_number not in Dynamixel.models:
@@ -108,23 +113,23 @@ class Dynamixel:
         self.min_pos = self.limits["Min_Position"]
 
     def updateMaxPositions(self):
+        print("ID %i -> " % self.id),
         pos, result = self.read("Max_Position")
         if result:
             self.max_pos = pos
-            print "max pos %d" % self.max_pos
         else:
-            print "Error: Could not read max position, using default one"
+            printC(WARNING, "Could not read max position, using default one")
 
         pos, result = self.read("Min_Position")
         if result:
             self.min_pos = pos
-            print "min pos %d" % self.min_pos
         else:
-            print "Error: Could not read min position, using default one"
+            printC(WARNING, "Error: Could not read min position, using default one")
+        printC(RANGE, "%s %s" % (self.min_pos, self.max_pos))
 
     def write(self, flag, value):
         if flag not in self.model:
-            print "Error: Flag not specified. Options are:"
+            printC(ERROR, "Flag not specified. Options are:")
             for key in self.model:
                 print "\t"+key
             return False
@@ -145,14 +150,14 @@ class Dynamixel:
             dxl_comm_result, dxl_error = self.packetHandler.write4ByteTxRx(
                 port, id, address, value)
         else:
-            print "Fatal: Undefined data length"
+            printC(ERROR, "Fatal: Undefined data length")
             quit()
 
         if dxl_comm_result != COMM_SUCCESS:
-            print "COMM -> %s" % self.packetHandler.getTxRxResult(dxl_comm_result)
+            printC(WARNING, self.packetHandler.getTxRxResult(dxl_comm_result))
             return False
         elif dxl_error != 0:
-            print "ERROR -> %s" % self.packetHandler.getRxPacketError(dxl_error)
+            printC(WARNING,  self.packetHandler.getRxPacketError(dxl_error))
             return False
 
         return True
@@ -184,12 +189,12 @@ class Dynamixel:
             quit()
 
         if dxl_comm_result != COMM_SUCCESS:
-            print "dxl_comm_result -> %s" % self.packetHandler.getTxRxResult(
-                dxl_comm_result)
+            printC(WARNING, "%s" % self.packetHandler.getTxRxResult(
+                dxl_comm_result))
             return 0, False
         elif dxl_error != 0:
-            print "dxl_error -> %s" % self.packetHandler.getRxPacketError(
-                dxl_error)
+            printC(WARNING, "%s" % self.packetHandler.getRxPacketError(
+                dxl_error))
             return 0, False
 
         return result, True

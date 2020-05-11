@@ -3,19 +3,17 @@
 from trajectory_msgs.msg import JointTrajectory
 from trajectory_msgs.msg import JointTrajectoryPoint
 from sensor_msgs.msg import JointState
+from colors import *
 from threading import Lock
 from dynamixel_sdk.packet_handler import *
 from dynamixel_sdk.port_handler import *
 from Dynamixel import Dynamixel
 import rospy
+import rospkg
 import yaml
 import sys
 import os
 import serial
-
-# Define MACROS
-INFO = "\x1b[0;31;40m" + "[INFO]" + "\x1b[0m "
-KEY = "\x1b[1;37;42m" + "Press any key to terminate" + "\x1b[0m "
 
 
 # Define the getch function according to os
@@ -48,10 +46,12 @@ class dynamixel_driver():
     def __init__(self):
 
         rospy.init_node('dynamixel_driver', anonymous=False)
+        rospack = rospkg.RosPack()
+        path = rospack.get_path('fenrir')
 
         self.port = rospy.get_param('~port', '/dev/ttyUSB0')
         self.baudrate = rospy.get_param('~baudrate', 1000000)
-        self.yaml = rospy.get_param('~config', r'../config/arm.yaml')
+        self.yaml = rospy.get_param('~config', path + '/config/arm.yaml')
 
         self.portHandler = PortHandler(self.port)
         self.rate = rospy.Rate(30)
@@ -61,18 +61,18 @@ class dynamixel_driver():
         # Open port
         try:
             self.portHandler.openPort()
-            print INFO + "Open port successful"
+            printC(INFO, "Open port successful")
         except serial.serialutil.SerialException:
-            print INFO + "Failed to open port %s" % self.port
+            printC(INFO, "Failed to open port %s" % self.port)
             getch()
             quit()
 
         # Set port baudrate
         if self.portHandler.setBaudRate(self.baudrate):
-            print INFO + "Succeeded to set the baudrate"
+            printC(INFO, "Succeeded to set the baudrate")
         else:
-            print INFO + "Failed to change the baudrate"
-            print KEY
+            printC(INFO, "Failed to change the baudrate")
+            printC(KEY)
             getch()
             quit()
 
@@ -95,7 +95,7 @@ class dynamixel_driver():
     def setDynamixels (self):
         self.dynamixels = {}
         with open(self.yaml) as file:
-            print INFO + "list of motors:"
+            printC(INFO, "list of motors: ")
             documents = yaml.safe_load(file)
             for item, doc in documents.items():
                 self.dynamixels[item] = Dynamixel(
@@ -106,7 +106,7 @@ class dynamixel_driver():
 
     def updatePosition (self):
         # Updating position limit
-        print INFO + "Updating positions"
+        printC(INFO, "Updating positions")
         for dyn in self.dynamixels:
             self.dynamixels[dyn].updateMaxPositions()
 
@@ -115,9 +115,9 @@ class dynamixel_driver():
         for key in self.dynamixels:
             self.dynamixels[key].write("Torque_Enabled", state*1)
         if state:
-            print INFO + "Enabling motors torque"
+            printC(INFO, "Enabling motors torque")
         else:
-            print INFO + "Desabling motors torque"
+            printC(INFO, "Desabling motors torque")
 
     #TODO verify the difference here from workbench
     def verifyMoving (self, event=None):
