@@ -76,7 +76,7 @@ class dynamixel_driver():
             getch()
             quit()
 
-        # Instanciate the subscriber and publisher
+        # Instantiate the subscriber and publisher
         rospy.Subscriber("/dynamixel/joint_trajectory", JointTrajectory, self.jointCallback)
         self.pubJointPosition = rospy.Publisher('/dynamixel/joint_states', JointState, queue_size=10)
 
