@@ -12,7 +12,7 @@ def joint_publisher():
         state = JointState()
         state.header.stamp = rospy.Time.now()
         state.name = ["Base", "Shoulder", "Elbow", "Wrist"]
-        state.position = [0.23, 0.23, 0.23, 0]
+        state.position = [0, 0.7, 0, 0]
 
         pub.publish(state)
         print 'published command'
