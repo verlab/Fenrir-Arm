@@ -84,7 +84,7 @@
     </link>
 
     <!-- joints: main serial chain -->
-    <joint name="${prefix}base" type="revolute">
+    <joint name="${prefix}Base" type="revolute">
       <origin xyz="0 0 0.080" rpy="0 0 0"/>
       <parent link="${prefix}base_link"/>
       <child link="${prefix}disk"/>
@@ -92,7 +92,7 @@
       <limit lower="-2.967" upper="2.967" effort="0" velocity="4.01"/>
     </joint>
 
-    <joint name="${prefix}sholder" type="revolute">
+    <joint name="${prefix}Shoulder" type="revolute">
       <origin xyz="0 0 0.080" rpy="0 0 0"/>
       <parent link="${prefix}disk"/>
       <child link="${prefix}lower_arm"/>
@@ -100,7 +100,7 @@
       <limit lower="-1.57" upper="2.79" effort="0" velocity="3.93"/>
     </joint>
 
-    <joint name="${prefix}elbow" type="revolute">
+    <joint name="${prefix}Elbow" type="revolute">
       <origin xyz="0 0.001 0.195" rpy="0 0 0"/>
       <parent link="${prefix}lower_arm"/>
       <child link="${prefix}forearm"/>
@@ -108,7 +108,7 @@
       <limit lower="-3.14" upper="4.66" effort="0" velocity="4.01"/>
     </joint>
 
-    <joint name="${prefix}wrist" type="revolute">
+    <joint name="${prefix}Wrist" type="revolute">
       <origin xyz="0 0 0.15" rpy="0 0 0"/>
       <parent link="${prefix}forearm"/>
       <child link="${prefix}end_effector"/>
