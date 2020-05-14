@@ -1,5 +1,0 @@
-<launch>
-
-<node name="dynamixel_driver" pkg="fenrir" type="dynamixel_driver" />
-
-</launch>

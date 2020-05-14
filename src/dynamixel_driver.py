@@ -1,7 +1,5 @@
 #!/usr/bin/env python2
 
-from trajectory_msgs.msg import JointTrajectory
-from trajectory_msgs.msg import JointTrajectoryPoint
 from sensor_msgs.msg import JointState
 from colors import *
 from threading import Lock
@@ -77,8 +75,8 @@ class dynamixel_driver():
             quit()
 
         # Instanciate the subscriber and publisher
-        rospy.Subscriber("/dynamixel/joint_trajectory", JointTrajectory, self.jointCallback)
-        self.pubJointPosition = rospy.Publisher('/dynamixel/joint_states', JointState, queue_size=10)
+        rospy.Subscriber("/fenrir/joint_commands", JointState, self.jointCallback)
+        self.pubJointPosition = rospy.Publisher('/fenrir/joint_states', JointState, queue_size=10)
 
     def __del__(self):
         try:
@@ -88,8 +86,8 @@ class dynamixel_driver():
 
     def jointCallback(self, data):
         self.write.acquire()
-        for i, name in enumerate(data.joint_names):
-            self.dynamixels[name].writeAngle(data.points[i].positions[0])
+        for i, name in enumerate(data.name):
+            self.dynamixels[name].writeAngle(data.position[i])
         self.write.release()
 
     def setDynamixels (self):

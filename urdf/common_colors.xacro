@@ -5,6 +5,6 @@
   <!-- Orange -->
   <xacro:property name="color_fenrir_orange"   value="${ 234/255} ${ 91/255} ${ 20/255} 1.0" />
   <!-- Black -->
-  <xacro:property name="color_fenrir_black"   value="${ 10/255} ${ 10/255} ${ 10/255} 1.0" />
+  <xacro:property name="color_fenrir_black"   value="${ 30/255} ${ 30/255} ${ 30/255} 1.0" />
 
 </robot>
