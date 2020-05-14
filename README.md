@@ -44,11 +44,13 @@ $ roslaunch fenrir fenrir_driver.launch
 Run the simulator launch:
 
 ```sh
-$ roslaunch fenrir fenrir_simulator.launch
+$ roslaunch fenrir fenrir_simulation.launch
 ```
 
 You can see the robot simulation on RVIZ.
 
-## 3D Part Files
+## 3D Part Files and Construction
 
-The full 3D assembly of the arm can be found at: https://a360.co/3aX4rV5
+The full 3D assembly of the arm can be found at: https://a360.co/3aX4rV5.
+
+Construction of the arm requires purchase of the components listed at [mechanical components](construction/mechanical_components.md).

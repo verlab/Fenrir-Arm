@@ -1,0 +1,22 @@
+{
+    "header": {
+        "filament_id": "0a038d25-7684-4d5c-974d-093867120857",
+        "filament_name": "PLA 1.75mm - V2 Hot End"
+    },
+    "override_slice_settings": false,
+    "settings": {
+        "filament_brand": "Raise3D",
+        "filament_density": 1240,
+        "filament_diameter": 1.75,
+        "filament_display_name": "[Raise3D] PLA 1.75mm - V2 Hot End",
+        "filament_flowrate": 100,
+        "filament_gcode_end": "",
+        "filament_gcode_start": "",
+        "filament_name_abbreviation": "PLA",
+        "filament_notes": "",
+        "filament_price": 30
+    },
+    "slice_settings": {
+    },
+    "version": 1
+}
