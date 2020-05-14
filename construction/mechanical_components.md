@@ -4,7 +4,7 @@ A comprenhensive list of materials needed to build the arm.
 
 ## Conventions
 
-Screw and nuts and washer conventions are specified in _ScrewConventions.jpg_.
+Screw and nuts and washer conventions are specified in [_ScrewConventions.jpg_](ScrewConventions.jpg).
 
 ### Screws
 
