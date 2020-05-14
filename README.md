@@ -44,7 +44,7 @@ $ roslaunch fenrir fenrir_driver.launch
 Run the simulator launch:
 
 ```sh
-$ roslaunch fenrir fenrir_simulator.launch
+$ roslaunch fenrir fenrir_simulation.launch
 ```
 
 You can see the robot simulation on RVIZ.
