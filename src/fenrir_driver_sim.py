@@ -33,20 +33,21 @@ class dynamixel_driver_sim():
         self.rate = rospy.Rate(30)
 
     def jointCallback(self, data):
+        printC(INFO, "Reciving position command!")
         for i, name in enumerate(data.name):
             self.positions[name] = data.position[i]
         self.iniTime = rospy.Time.now()
 
     def updatePosition(self, name):
+        t1 = 64*self.times[name][1]/self.times[name][0]
         while not rospy.is_shutdown():
-            t1 = 64*self.times[name][1]/self.times[name][0]
             t2 = 64*abs(self.positions[name] - self.actualPosition[name])/self.times[name][1]
             t3 = (t1 + t2)*1000000000
             time = abs(rospy.Time.now().nsecs - self.iniTime.nsecs)
             self.actualPosition[name] = (1/(1 + np.exp(-4*time/t3)))*self.positions[name]
-            if name == "Shoulder":
-                print self.actualPosition[name]
+
     def run(self):
+        printC(INFO, "Initing simulated Fenrir")
         for name in self.times:
             thread = threading.Thread(target=self.updatePosition, args=(name,))
             thread.start()

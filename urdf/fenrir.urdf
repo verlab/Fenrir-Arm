@@ -90,28 +90,28 @@
     </collision>
   </link>
   <!-- joints: main serial chain -->
-  <joint name="base" type="revolute">
+  <joint name="Base" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.080"/>
     <parent link="base_link"/>
     <child link="disk"/>
     <axis xyz="0 0 1"/>
     <limit effort="0" lower="-2.967" upper="2.967" velocity="4.01"/>
   </joint>
-  <joint name="sholder" type="revolute">
+  <joint name="Shoulder" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.080"/>
     <parent link="disk"/>
     <child link="lower_arm"/>
     <axis xyz="0 1 0"/>
     <limit effort="0" lower="-1.57" upper="2.79" velocity="3.93"/>
   </joint>
-  <joint name="elbow" type="revolute">
+  <joint name="Elbow" type="revolute">
     <origin rpy="0 0 0" xyz="0 0.001 0.195"/>
     <parent link="lower_arm"/>
     <child link="forearm"/>
     <axis xyz="0 -1 0"/>
     <limit effort="0" lower="-3.14" upper="4.66" velocity="4.01"/>
   </joint>
-  <joint name="wrist" type="revolute">
+  <joint name="Wrist" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.15"/>
     <parent link="forearm"/>
     <child link="end_effector"/>
@@ -119,4 +119,3 @@
     <limit effort="0" lower="-3.31" upper="3.31" velocity="7.50"/>
   </joint>
 </robot>
-
