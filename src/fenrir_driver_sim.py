@@ -7,6 +7,7 @@ import threading
 import rospkg
 import rospy
 import yaml
+import time
 
 class dynamixel_driver_sim():
 
@@ -20,40 +21,60 @@ class dynamixel_driver_sim():
         self.actualPosition = {}
         self.positions = {}
         self.times = {}
+        self.t3 = {}
+        self.initPos = {}
         self.iniTime = rospy.Time.now()
         with open(self.yaml) as file:
             documents = yaml.safe_load(file)
             for item, doc in documents.items():
-                if (float(doc["Protocol"]) == 2):
+                self.actualPosition[item] = 0
+                self.positions[item] = 0
+                self.initPos[item] = 0
+                if (int(doc["Profile_Acceleration"]) == 2):
                     self.times[item] = (doc["Profile_Acceleration"]* 214.577, doc["Profile_Velocity"]*0.229)
-                    self.actualPosition[item] = 0
-                    self.positions[item] = 0
+                else:
+                    self.times[item] = (30* 214.577, 120*0.229)
         rospy.Subscriber("/fenrir/joint_commands", JointState, self.jointCallback)
         self.pubJointPosition = rospy.Publisher('/fenrir/joint_states', JointState, queue_size=10)
-        self.rate = rospy.Rate(30)
+        self.rate = rospy.Rate(50)
 
     def jointCallback(self, data):
         printC(INFO, "Reciving position command!")
         for i, name in enumerate(data.name):
             self.positions[name] = data.position[i]
-        self.iniTime = rospy.Time.now()
+            t1 = 64*self.times[name][1]/self.times[name][0]
+            #t2 = 64*abs(self.positions[name] - self.actualPosition[name])/self.times[name][1]
+            t2 = 60*abs(self.positions[name] - self.actualPosition[name])*0.5/(self.times[name][1]*2*np.pi) + t1
+            self.t3[name] = (t1 + t2)*1000
+            self.initPos[name] = self.actualPosition[name]
+        self.iniTime = int(round(time.time() * 1000))
 
-    def updatePosition(self, name):
-        t1 = 64*self.times[name][1]/self.times[name][0]
+    def updatePosition(self):
         while not rospy.is_shutdown():
-            t2 = 64*abs(self.positions[name] - self.actualPosition[name])/self.times[name][1]
-            t3 = (t1 + t2)*1000000000
-            time = abs(rospy.Time.now().nsecs - self.iniTime.nsecs)
-            self.actualPosition[name] = (1/(1 + np.exp(-4*time/t3)))*self.positions[name]
+            for name in self.times:
+                if (abs(self.actualPosition[name] - self.positions[name]) >= 0.01):
+                    timeV = abs(int(round(time.time() * 1000)) - self.iniTime)
+                    if (name == "Elbow"):
+                        print self.actualPosition[name] , timeV
+                    self.actualPosition[name] = self.actualPosition[name] + (1/(1 + np.exp(-4*(timeV/self.t3[name] - 1))))*self.positions[name]
 
     def run(self):
         printC(INFO, "Initing simulated Fenrir")
-        for name in self.times:
-            thread = threading.Thread(target=self.updatePosition, args=(name,))
-            thread.start()
+        #thread = threading.Thread(target=self.updatePosition)
+        #thread.start()
         while not rospy.is_shutdown():
             self.state = JointState()
             for name in self.actualPosition:
+                if ((self.positions[name] - self.actualPosition[name]) > 0.01):
+                    timeV = abs(int(round(time.time() * 1000)) - self.iniTime)
+                    if (name == "Elbow"):
+                        print self.actualPosition[name] , timeV
+                    self.actualPosition[name] = self.initPos[name] + (1/(1 + np.exp(-4*(timeV/self.t3[name] - 1))))*abs(self.positions[name] - self.initPos[name])
+                elif ((self.positions[name] - self.actualPosition[name]) < -0.01):
+                    timeV = abs(int(round(time.time() * 1000)) - self.iniTime)
+                    if (name == "Elbow"):
+                        print self.actualPosition[name] , timeV
+                    self.actualPosition[name] = self.initPos[name] - (1/(1 + np.exp(-4*(timeV/self.t3[name] - 1))))*abs(self.positions[name] - self.initPos[name])
                 self.state.name.append(name)
                 self.state.position.append(self.actualPosition[name])
             self.state.header.stamp = rospy.Time.now()
