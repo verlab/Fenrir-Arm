@@ -43,37 +43,21 @@ class dynamixel_driver_sim():
         for i, name in enumerate(data.name):
             self.positions[name] = data.position[i]
             t1 = 64*self.times[name][1]/self.times[name][0]
-            #t2 = 64*abs(self.positions[name] - self.actualPosition[name])/self.times[name][1]
             t2 = 60*abs(self.positions[name] - self.actualPosition[name])*0.5/(self.times[name][1]*2*np.pi) + t1
             self.t3[name] = (t1 + t2)*1000
             self.initPos[name] = self.actualPosition[name]
         self.iniTime = int(round(time.time() * 1000))
 
-    def updatePosition(self):
-        while not rospy.is_shutdown():
-            for name in self.times:
-                if (abs(self.actualPosition[name] - self.positions[name]) >= 0.01):
-                    timeV = abs(int(round(time.time() * 1000)) - self.iniTime)
-                    if (name == "Elbow"):
-                        print self.actualPosition[name] , timeV
-                    self.actualPosition[name] = self.actualPosition[name] + (1/(1 + np.exp(-4*(timeV/self.t3[name] - 1))))*self.positions[name]
-
     def run(self):
         printC(INFO, "Initing simulated Fenrir")
-        #thread = threading.Thread(target=self.updatePosition)
-        #thread.start()
         while not rospy.is_shutdown():
             self.state = JointState()
             for name in self.actualPosition:
                 if ((self.positions[name] - self.actualPosition[name]) > 0.01):
                     timeV = abs(int(round(time.time() * 1000)) - self.iniTime)
-                    if (name == "Elbow"):
-                        print self.actualPosition[name] , timeV
                     self.actualPosition[name] = self.initPos[name] + (1/(1 + np.exp(-4*(timeV/self.t3[name] - 1))))*abs(self.positions[name] - self.initPos[name])
                 elif ((self.positions[name] - self.actualPosition[name]) < -0.01):
                     timeV = abs(int(round(time.time() * 1000)) - self.iniTime)
-                    if (name == "Elbow"):
-                        print self.actualPosition[name] , timeV
                     self.actualPosition[name] = self.initPos[name] - (1/(1 + np.exp(-4*(timeV/self.t3[name] - 1))))*abs(self.positions[name] - self.initPos[name])
                 self.state.name.append(name)
                 self.state.position.append(self.actualPosition[name])
