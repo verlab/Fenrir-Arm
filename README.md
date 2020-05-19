@@ -33,7 +33,7 @@ $ rosdep install fenrir
 
 ## Start ROS Driver
 
-Run the fenrir_driver.launch file using:
+Run the fenrir_driver.launch file with:
 
 ```sh
 $ roslaunch fenrir fenrir_driver.launch
