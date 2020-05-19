@@ -30,7 +30,7 @@ class dynamixel_driver_sim():
                 self.actualPosition[item] = 0
                 self.positions[item] = 0
                 self.initPos[item] = 0
-                if (int(doc["Profile_Acceleration"]) == 2):
+                if (int(doc["Protocol"]) == 2):
                     self.times[item] = (doc["Profile_Acceleration"]* 214.577, doc["Profile_Velocity"]*0.229)
                 else:
                     self.times[item] = (30* 214.577, 120*0.229)
