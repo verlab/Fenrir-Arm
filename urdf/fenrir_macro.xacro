@@ -59,6 +59,20 @@
         </geometry>
         <xacro:material_fenrir_orange />
       </visual>
+      <visual>
+        <origin xyz="0.0004 0.031 0.001" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/emblem.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <visual>
+        <origin xyz="0 -0.011 0.17" rpy="${pi/2} 0 ${-pi/2}"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/ax-12.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
