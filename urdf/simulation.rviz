@@ -3,7 +3,8 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /TF1
       Splitter Ratio: 0.5
     Tree Height: 416
   - Class: rviz/Selection
@@ -70,11 +71,17 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        end_effector:
+        driving_gear:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         forearm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        gripper_base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -95,7 +102,7 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-      Marker Scale: 1
+      Marker Scale: 0.25
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -132,25 +139,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.4479632377624512
+      Distance: 1.523344874382019
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.12105394154787064
-        Y: 0.13336656987667084
-        Z: 0.2602592408657074
+        X: 0.009779104962944984
+        Y: -0.06021641567349434
+        Z: 0.5483149886131287
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5903987288475037
+      Pitch: 0.15479743480682373
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.1154038906097412
+      Yaw: 1.450405478477478
     Saved: ~
 Window Geometry:
   Displays:
