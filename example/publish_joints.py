@@ -10,22 +10,22 @@ def joint_publisher():
     rate = rospy.Rate(0.2) # 10hz
     while not rospy.is_shutdown():
         state = JointState()
-        state.name = ["Base", "Shoulder", "Elbow", "Wrist"]
+        state.name = ["Base", "Shoulder", "Elbow", "Wrist", "Gripper"]
+
+        # state.header.stamp = rospy.Time.now()
+        # state.position = [0.52, 0.52, 0.52, 0]
+        # pub.publish(state)
+        # print 'published command'
+        # rate.sleep()
 
         state.header.stamp = rospy.Time.now()
-        state.position = [0.52, 0.52, 0.52, 0]
+        state.position = [0.5, 0.5, 0.5, 0.5, -0.8]
         pub.publish(state)
         print 'published command'
         rate.sleep()
 
         state.header.stamp = rospy.Time.now()
-        state.position = [0, 0, 0, 0]
-        pub.publish(state)
-        print 'published command'
-        rate.sleep()
-
-        state.header.stamp = rospy.Time.now()
-        state.position = [0.32, 1.7, 0.25, 0]
+        state.position = [0, 0, 0, 0, 0]
         pub.publish(state)
         print 'published command'
         rate.sleep()
