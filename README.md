@@ -51,7 +51,6 @@ You can see the robot simulation on RVIZ.
 
 ## 3D Part Files and Construction
 
-The full 3D assembly of the arm can be found at
-<iframe src="https://myhub.autodesk360.com/ue2ae9b78/shares/public/SH919a0QTf3c32634dcfc2cfa3694b63d784?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+The full 3D assembly of the arm can be [downloaded here](https://a360.co/2XFVj2e). 
 
 Construction of the arm requires purchase of the components listed at [mechanical components](construction/mechanical_components.md).
