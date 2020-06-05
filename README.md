@@ -31,26 +31,44 @@ $ catkin_make # or catkin build
 $ rosdep install fenrir
 ```
 
-## Start ROS Driver
+## Usage
 
-Run the fenrir_driver.launch file using:
-
-```sh
-$ roslaunch fenrir fenrir_driver.launch
-```
-
-## Use simulator RVIZ
-
-Run the simulator launch:
+### Simulator only
 
 ```sh
-$ roslaunch fenrir fenrir_simulation.launch
+$ roslaunch fenrir simulator.launch
 ```
 
-You can see the robot simulation on RVIZ.
+### Driver only (no RVIZ)
+
+```sh
+$ roslaunch fenrir driver.launch
+```
+
+### Driver with RVIZ
+
+_This will initialize both the driver for the servos as well as the state publisher and RVIZ for visualization_
+
+```sh
+$ roslaunch fenrir initialize.launch
+```
+
+## Testing
+
+Run the example python code
+
+```sh
+rosrun fenrir publish_joints.py
+```
+
+Or with an inline message publish
+
+```sh
+rostopic pub -r 1 /fenrir/joint_commands/ sensor_msgs/JointState  '{name: [Base, Shoulder, Elbow, Wrist, Gripper], position: [0.5, 0.5, 0.5, 0.5, 0.0], velocity: [], effort: []}'
+```
 
 ## 3D Part Files and Construction
 
-The full 3D assembly of the arm can be [downloaded here](https://a360.co/2XFVj2e). 
+The full 3D assembly of the arm can be [downloaded here](https://a360.co/2XFVj2e).
 
 Construction of the arm requires purchase of the components listed at [mechanical components](construction/mechanical_components.md).
