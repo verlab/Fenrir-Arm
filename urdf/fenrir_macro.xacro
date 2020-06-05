@@ -224,19 +224,19 @@
     </joint>
 
     <joint name="${prefix}Shoulder" type="revolute">
-      <origin xyz="0 0 0.080" rpy="0 0 0"/>
+      <origin xyz="0 0 0.080" rpy="0 3.1415 0"/>
       <parent link="${prefix}disk"/>
       <child link="${prefix}lower_arm"/>
       <axis xyz="0 1 0"/>
-      <limit lower="-1.57" upper="2.79" effort="0" velocity="3.93"/>
+      <limit lower="-3.57" upper="3.79" effort="0" velocity="3.93"/>
     </joint>
 
     <joint name="${prefix}Elbow" type="revolute">
-      <origin xyz="0 0.001 0.195" rpy="0 0 0"/>
+      <origin xyz="0 0.001 0.195" rpy="0 3.1415 0"/>
       <parent link="${prefix}lower_arm"/>
       <child link="${prefix}forearm"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="-3.14" upper="4.66" effort="0" velocity="4.01"/>
+      <limit lower="-6.14" upper="6.66" effort="0" velocity="4.01"/>
     </joint>
 
     <joint name="${prefix}Wrist" type="revolute">
