@@ -224,7 +224,7 @@
     </joint>
 
     <joint name="${prefix}Shoulder" type="revolute">
-      <origin xyz="0 0 0.080" rpy="0 0 0"/>
+      <origin xyz="0 -0.001 0.089" rpy="0 -0.6 0"/>
       <parent link="${prefix}disk"/>
       <child link="${prefix}lower_arm"/>
       <axis xyz="0 1 0"/>
@@ -232,7 +232,7 @@
     </joint>
 
     <joint name="${prefix}Elbow" type="revolute">
-      <origin xyz="0 0.001 0.195" rpy="0 0 0"/>
+      <origin xyz="0 0.001 0.195" rpy="0 2.4 0"/>
       <parent link="${prefix}lower_arm"/>
       <child link="${prefix}forearm"/>
       <axis xyz="0 -1 0"/>
