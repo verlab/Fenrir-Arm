@@ -19,13 +19,13 @@ def joint_publisher():
         # rate.sleep()
 
         state.header.stamp = rospy.Time.now()
-        state.position = [0.5, 0.5, 0.5, 0.5, -0.8]
+        state.position = [0, 3.14, 3.14, 0, 0]
         pub.publish(state)
         print 'published command'
         rate.sleep()
 
         state.header.stamp = rospy.Time.now()
-        state.position = [0, 0, 0, 0, 0]
+        state.position = [0, 0, 3.14, 0, 1.3]
         pub.publish(state)
         print 'published command'
         rate.sleep()

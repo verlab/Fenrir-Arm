@@ -1,0 +1,12 @@
+<launch>
+
+    <!-- Robot publisher -->
+    <include file="$(find fenrir)/launch/fenrir_state_publisher.launch" />
+
+    <!-- Start driver (physical robot driver) -->
+    <node output="screen" name="dynamixel_driver" pkg="fenrir" type="fenrir_driver.py" />
+
+    <!-- Rviz (?) -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find fenrir)/urdf/simulation.rviz"/>
+ 
+</launch>

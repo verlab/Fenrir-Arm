@@ -1,5 +1,4 @@
-<launch>
-
+<launch>    
     <param name="robot_description" command="$(find xacro)/xacro '$(find fenrir)/urdf/fenrir.xacro'"/>
 
     <!-- Joint values -->
@@ -7,8 +6,4 @@
         <param name="publish_frequency" value="30.0"/>
         <remap from="joint_states" to="fenrir/joint_states"/>
     </node>
-
-    <!-- Rviz -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find fenrir)/urdf/simulation.rviz"/>
-
 </launch>
