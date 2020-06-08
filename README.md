@@ -22,18 +22,22 @@ $ cd ~/catkin_ws/src
 $ git clone https://github.com/verlab/Fenrir-Arm.git
 ```
 
+-   Fixing package dependencies:
+
+```sh
+$ cd ~/catkin_ws
+$ rosstack profile && rospack profile
+$ rosdep install --from-paths src/Fenrir-Arm --ignore-src -r -y
+```
+
 -   Compile your ROS workspace directory (e.g. ~/catkin-ws ):
 
 ```sh
 $ cd ~/catkin_ws
 $ catkin_make # or catkin build
+$ source devel/setup.bash # Set the appropriate bash extension
 ```
 
--   Fixing package dependencies:
-
-```sh
-$ rosdep install fenrir
-```
 
 ## Usage
 
