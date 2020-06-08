@@ -6,12 +6,12 @@ from threading import Lock
 from dynamixel_sdk.packet_handler import *
 from dynamixel_sdk.port_handler import *
 from Dynamixel import Dynamixel
-import rospy
+import serial
 import rospkg
+import rospy
 import yaml
 import sys
 import os
-import serial
 
 
 # Define the getch function according to os
@@ -147,6 +147,7 @@ class dynamixel_driver():
             self.state.position = angles
             self.state.effort = efforts
             self.state.velocity = velocities
+            self.state.header.stamp = rospy.Time.now()
             self.pubJointPosition.publish(self.state)
             self.rate.sleep()
 
