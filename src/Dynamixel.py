@@ -1,6 +1,7 @@
 from dynamixel_sdk.port_handler import *
 from dynamixel_sdk.packet_handler import *
 from colors import *
+import numpy as np
 
 
 class ModelFlag:
@@ -52,13 +53,13 @@ class Dynamixel:
 
     angle_limits = {
         311: {
-            "Max_Angle": 360.0,
+            "Max_Angle": (2*np.pi),
             "Max_Position": 4095,
             "Min_Angle": 0.0,
             "Min_Position": 0
         },
         12: {
-            "Max_Angle": 300.0,
+            "Max_Angle": (300*np.pi/180),
             "Max_Position": 1023,
             "Min_Angle": 0.0,
             "Min_Position": 0
