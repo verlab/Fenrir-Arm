@@ -1,0 +1,305 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:include filename="$(find fenrir)/urdf/common_materials.xacro"/>
+
+  <xacro:macro name="fenrir" params="prefix">
+
+    <!-- LINKS: main serial links -->
+    <!-- Base link -->
+    <link name="${prefix}base_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/base_link.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/base_link.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}disk">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/disk.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/disk.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Lower arm -->
+    <link name="${prefix}lower_arm">
+      <visual>
+        <origin xyz="0 0.022 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/lower_arm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0.022 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/lower_arm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Fore arm -->
+    <link name="${prefix}forearm">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/forearm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <visual>
+        <origin xyz="0.0004 0.031 0.001" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/emblem.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <visual>
+        <origin xyz="-0.0003 0.034 0.0051" rpy="${-pi/2} -0.080 ${-pi}"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/wolf.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <visual>
+        <origin xyz="0.001 -0.0155 0.172" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/ax-12.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/forearm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Gripper -->
+    <link name="${prefix}gripper_base">
+      <visual>
+        <origin xyz="0 0.001 0" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/ManipulatorServoHolder.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <visual>
+        <origin xyz="0.0315 -0.002 0.027" rpy="${-pi} 0 ${-pi}"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/ax-12.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0.001 0" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/ManipulatorServoHolder.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}driving_gear">
+      <visual>
+        <origin xyz="0.0115 0 0" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/driving_gear.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <collision>
+        <origin xyz="0.0115 0 0" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/driving_gear.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}slave_gear">
+      <visual>
+        <origin xyz="0.005 0 0" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/slave_gear.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <collision>
+        <origin xyz="0.005 0 0" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/slave_gear.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}rod">
+      <visual>
+        <origin xyz="-0.0035 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/secondaryRod.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <collision>
+        <origin xyz="-0.0035 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/secondaryRod.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}rod_slave">
+      <visual>
+        <origin xyz="0.0035 0 0" rpy="${pi/2} 0 ${-pi/2}"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/secondaryRod.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <collision>
+        <origin xyz="0.0035 0 0" rpy="${pi/2} 0 ${-pi/2}"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/secondaryRod.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}gripper_tip">
+      <visual>
+        <origin xyz="0.0092 0 0" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/gripperTip.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <collision>
+        <origin xyz="0.0092 0 0" rpy="0 ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/gripperTip.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}tip_slave">
+      <visual>
+        <origin xyz="-0.0092 0 0" rpy="${pi} ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/visual/gripperTip.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <xacro:material_fenrir_orange />
+      </visual>
+      <collision>
+        <origin xyz="-0.0092 0 0" rpy="${pi} ${-pi/2} 0"/>
+        <geometry>
+          <mesh filename="package://fenrir/meshes/collision/gripperTip.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <!-- JOINTS: main serial chain -->
+    <joint name="${prefix}Base" type="revolute">
+      <origin xyz="0 0 0.080" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}disk"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.967" upper="2.967" effort="0" velocity="4.01"/>
+    </joint>
+
+    <joint name="${prefix}Shoulder" type="revolute">
+      <origin xyz="0 0 0.080" rpy="0 ${pi} 0"/>
+      <parent link="${prefix}disk"/>
+      <child link="${prefix}lower_arm"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="0" upper="1.4" effort="0" velocity="3.93"/>
+    </joint>
+
+    <joint name="${prefix}Elbow" type="revolute">
+      <origin xyz="0 0.001 0.195" rpy="0 ${pi+0.2} 0"/>
+      <parent link="${prefix}lower_arm"/>
+      <child link="${prefix}forearm"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-6.14" upper="6.66" effort="0" velocity="4.01"/>
+    </joint>
+
+    <joint name="${prefix}Wrist" type="revolute">
+      <origin xyz="0 0 0.19" rpy="0 0 ${pi}"/>
+      <parent link="${prefix}forearm"/>
+      <child link="${prefix}gripper_base"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="-3.31" upper="3.31" effort="0" velocity="7.50"/>
+    </joint>
+
+    <joint name="${prefix}Gripper" type="revolute">
+      <origin xyz="0 0.014 0.0262" rpy="${pi+0.25} 0 0"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}driving_gear"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-3.31" upper="3.31" effort="0" velocity="7.50"/>
+    </joint>
+
+    <joint name="${prefix}Gripper_slave" type="revolute">
+      <origin xyz="0 -0.0135 0.0262" rpy="-${pi+0.25} 0 0"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}slave_gear"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-3.31" upper="3.31" effort="0" velocity="7.50"/>
+      <mimic joint="Gripper" multiplier="-1" offset="0"/>
+    </joint>
+
+    <joint name="${prefix}Rod_left" type="revolute">
+      <origin xyz="0 0.0124 0.054" rpy="${pi+1.05} 0 0"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}rod"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-3.31" upper="3.31" effort="0" velocity="7.50"/>
+      <mimic joint="Gripper" multiplier="1.26" offset="0"/>
+    </joint>
+
+    <joint name="${prefix}Rod_right" type="revolute">
+      <origin xyz="0 -0.0115 0.054" rpy="-${pi+1.05} 0 0"/>
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}rod_slave"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-3.31" upper="3.31" effort="0" velocity="7.50"/>
+      <mimic joint="Gripper" multiplier="-1.26" offset="0"/>
+    </joint>
+
+    <joint name="${prefix}Tip_left" type="revolute">
+      <origin xyz="0 0.052 0" rpy="-${pi-0.75} 0 0"/>
+      <parent link="${prefix}driving_gear"/>
+      <child link="${prefix}gripper_tip"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-3.31" upper="3.31" effort="0" velocity="7.50"/>
+      <mimic joint="Gripper" multiplier="-0.8" offset="0"/>
+    </joint>
+
+    <joint name="${prefix}Tip_right" type="revolute">
+      <origin xyz="0 -0.052 0" rpy="${pi-0.75} 0 0"/>
+      <parent link="${prefix}slave_gear"/>
+      <child link="${prefix}tip_slave"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-3.31" upper="3.31" effort="0" velocity="7.50"/>
+      <mimic joint="Gripper" multiplier="0.8" offset="0"/>
+    </joint>
+
+  </xacro:macro>
+</robot>
+

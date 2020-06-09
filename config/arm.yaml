@@ -3,8 +3,8 @@ Base:
   Protocol: 2
   Return_Delay_Time: 100
   Operating_Mode: 3
-  Profile_Acceleration: 30
-  Profile_Velocity: 100
+  Profile_Acceleration: 10
+  Profile_Velocity: 40
   Shutdown: 33
 
 Shoulder:
@@ -12,13 +12,13 @@ Shoulder:
   Protocol: 2
   Return_Delay_Time: 100
   Operating_Mode: 3
-  Profile_Acceleration: 30
-  Profile_Velocity: 100
+  Profile_Acceleration: 10
+  Profile_Velocity: 40
   # Velocity_Trajectory:
   Shutdown: 33
   Min_Position: 625
   Max_Position: 3409
-  Velocity_Limit: 120
+  Velocity_Limit: 40
 
 Shoulder_shadow:
   ID: 4
@@ -26,22 +26,22 @@ Shoulder_shadow:
   Shadow_ID: 5
   Return_Delay_Time: 100
   Operating_Mode: 3
-  Profile_Acceleration: 30
-  Profile_Velocity: 100
+  Profile_Acceleration: 10
+  Profile_Velocity: 40
   # Velocity_Trajectory:
   Shutdown: 33
   Drive_Mode: 1
   Min_Position: 625
   Max_Position: 3409
-  Velocity_Limit: 120
+  Velocity_Limit: 40
 
 Elbow:
   ID: 3
   Protocol: 2
   Return_Delay_Time: 100
   Operating_Mode: 3
-  Profile_Acceleration: 30
-  Profile_Velocity: 100
+  Profile_Acceleration: 10
+  Profile_Velocity: 40
   Shutdown: 33
   Min_Position: 625
   Max_Position: 3409
@@ -61,4 +61,6 @@ Gripper:
   Return_Delay_Time: 100
   Min_Position: 0
   Max_Position: 1023
+  Max_Torque: 200
+  Torque_Limit: 200
 
