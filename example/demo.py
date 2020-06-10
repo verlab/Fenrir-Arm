@@ -22,7 +22,7 @@ def joint_publisher():
         # rate.sleep()
 
         state.header.stamp = rospy.Time.now()
-        state.position = home;
+        state.position = home
         pub.publish(state)
         print 'published command'
         rate.sleep()

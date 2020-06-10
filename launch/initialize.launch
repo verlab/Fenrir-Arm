@@ -1,8 +1,7 @@
 <launch>
 
     <!-- Robot publisher -->
-    <!-- <include file="$(find fenrir)/launch/fenrir_state_publisher.launch" /> -->
-    <param name="robot_description" command="$(find xacro)/xacro '$(find fenrir)/urdf/fenrir_real.xacro'"/>
+    <include file="$(find fenrir)/launch/fenrir_state_publisher.launch" />
 
     <!-- Joint values -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
@@ -15,5 +14,5 @@
 
     <!-- Rviz (?) -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find fenrir)/urdf/simulation.rviz"/>
- 
+
 </launch>
