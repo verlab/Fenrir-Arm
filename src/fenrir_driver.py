@@ -76,7 +76,7 @@ class dynamixel_driver():
 
         # Instanciate the subscriber and publisher
         rospy.Subscriber("/fenrir/joint_commands", JointState, self.jointCallback)
-        self.pubJointPosition = rospy.Publisher('/fenrir/joint_states', JointState, queue_size=10)
+        self.pubJointPosition = rospy.Publisher('/fenrir/joint_states', JointState, queue_size=1)
 
     def __del__(self):
         try:
