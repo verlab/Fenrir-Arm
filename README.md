@@ -63,7 +63,7 @@ $ roslaunch fenrir initialize.launch
 
 ## Testing
 
-Run the example python code
+Run the example python code below
 
 ```sh
 rosrun fenrir publish_joints.py
