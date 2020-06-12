@@ -244,9 +244,7 @@ class Dynamixel:
 
     def readLoad(self):
         if self.protocol == 2:
-            current, result = self.read("Present_Current")
-            if (current > 32768):
-                current = current - 65536
+            current, result = self.readCurrent()
             load = (1.1489*current - 0.172340426)*0.001
             if not result:
                 return 0.0, False
@@ -265,17 +263,20 @@ class Dynamixel:
     def readCurrent(self):
         if self.protocol == 2:
             current, result = self.read("Present_Current")
+            if (current > 32768):
+                current = current - 65536
+            current = current*3.36 # mA
             if not result:
                 return 0.0, False
         else:
             current = float("-inf")
         return current, True
 
-    def readTension(self):
-        tension, result = self.read("Present_Voltage")
+    def readVoltage(self):
+        voltage, result = self.read("Present_Voltage")
         if not result:
             return 0.0, False
-        return tension, True
+        return float(voltage)/10, True
 
     def readTemp(self):
         temperature, result = self.read("Present_Temperature")

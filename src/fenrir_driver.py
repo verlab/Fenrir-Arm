@@ -137,7 +137,7 @@ class dynamixel_driver():
         while not rospy.is_shutdown():
             names = []
             angles, efforts, velocities = [], [], []
-            currents, tensions, temperatures = [], [], []
+            currents, voltages, temperatures = [], [], []
             self.write.acquire()
             for dyn in self.dynamixels:
                 names.append(dyn)
@@ -148,7 +148,7 @@ class dynamixel_driver():
 
                 # information about status
                 currents.append(self.dynamixels[dyn].readCurrent()[0])
-                tensions.append(self.dynamixels[dyn].readTension()[0])
+                voltages.append(self.dynamixels[dyn].readVoltage()[0])
                 temperatures.append(self.dynamixels[dyn].readTemp()[0])
 
             self.write.release()
@@ -159,7 +159,7 @@ class dynamixel_driver():
 
             self.info.name = names
             self.info.current = currents
-            self.info.tension = tensions
+            self.info.voltage = voltages
             self.info.temperature = temperatures
 
             self.state.header.stamp = rospy.Time.now()
