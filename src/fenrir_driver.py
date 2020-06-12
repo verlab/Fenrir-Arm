@@ -6,6 +6,7 @@ from threading import Lock
 from dynamixel_sdk.packet_handler import *
 from dynamixel_sdk.port_handler import *
 from Dynamixel import Dynamixel
+from fenrir.msg import MotorInfo
 import serial
 import rospkg
 import rospy
@@ -54,6 +55,7 @@ class dynamixel_driver():
         self.portHandler = PortHandler(self.port)
         self.rate = rospy.Rate(30)
         self.state = JointState()
+        self.info = MotorInfo()
         self.write = Lock()
 
         # Open port
@@ -77,6 +79,7 @@ class dynamixel_driver():
         # Instanciate the subscriber and publisher
         rospy.Subscriber("/fenrir/joint_commands", JointState, self.jointCallback)
         self.pubJointPosition = rospy.Publisher('/fenrir/joint_states', JointState, queue_size=1)
+        self.pubJointInfo = rospy.Publisher('/fenrir/joint_info', MotorInfo, queue_size=1)
 
     def __del__(self):
         try:
@@ -133,22 +136,35 @@ class dynamixel_driver():
         #rospy.Timer(rospy.Duration(0.5), self.verifyMoving)
         while not rospy.is_shutdown():
             names = []
-            angles = []
-            efforts = []
-            velocities = []
+            angles, efforts, velocities = [], [], []
+            currents, tensions, temperatures = [], [], []
             self.write.acquire()
             for dyn in self.dynamixels:
                 names.append(dyn)
+                # information about position
                 angles.append(self.dynamixels[dyn].readAngle()[0])
                 efforts.append(self.dynamixels[dyn].readLoad()[0])
                 velocities.append(self.dynamixels[dyn].readVelocity()[0])
+
+                # information about status
+                currents.append(self.dynamixels[dyn].readCurrent()[0])
+                tensions.append(self.dynamixels[dyn].readTension()[0])
+                temperatures.append(self.dynamixels[dyn].readTemp()[0])
+
             self.write.release()
             self.state.name = names
             self.state.position = angles
             self.state.effort = efforts
             self.state.velocity = velocities
+
+            self.info.name = names
+            self.info.current = currents
+            self.info.tension = tensions
+            self.info.temperature = temperatures
+
             self.state.header.stamp = rospy.Time.now()
             self.pubJointPosition.publish(self.state)
+            self.pubJointInfo.publish(self.info)
             self.rate.sleep()
 
 

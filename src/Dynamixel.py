@@ -31,6 +31,8 @@ class Dynamixel:
             "Present_Current": ModelFlag(126, 2),
             "Present_Velocity": ModelFlag(128, 4),
             "Present_Position": ModelFlag(132, 4),
+            "Present_Voltage": ModelFlag(144, 2),
+            "Present_Temperature": ModelFlag(146, 1),
             "Velocity_Trajectory": ModelFlag(136, 4)
         },
 
@@ -47,7 +49,9 @@ class Dynamixel:
             "Present_Position": ModelFlag(36, 2),
             "Present_Velocity": ModelFlag(38, 2),
             "Present_Load": ModelFlag(40, 2),
-            "Moving": ModelFlag(46, 1),
+            "Present_Voltage": ModelFlag(42, 1),
+            "Present_Temperature": ModelFlag(43, 1),
+            "Moving": ModelFlag(46, 1)
         }
     }
 
@@ -224,19 +228,18 @@ class Dynamixel:
         self.goal_pos = position
         return result
 
+    # Read funcions
+
     def readAngle(self):
         position, result = self.read("Present_Position")
         if not result:
             return 0.0, False
-
         max_angle = self.limits['Max_Angle']
         min_angle = self.limits['Min_Angle']
         max_position = self.limits['Max_Position']
         min_position = self.limits['Min_Position']
-
         ratio = (1.0*position)/abs(max_position-min_position)
         angle = ratio * max_angle
-
         return angle, True
 
     def readLoad(self):
@@ -258,6 +261,27 @@ class Dynamixel:
         if not result:
             return 0.0, False
         return velocity, True
+
+    def readCurrent(self):
+        if self.protocol == 2:
+            current, result = self.read("Present_Current")
+            if not result:
+                return 0.0, False
+        else:
+            current = float("-inf")
+        return current, True
+
+    def readTension(self):
+        tension, result = self.read("Present_Voltage")
+        if not result:
+            return 0.0, False
+        return tension, True
+
+    def readTemp(self):
+        temperature, result = self.read("Present_Temperature")
+        if not result:
+            return 0.0, False
+        return temperature, True
 
     def reachedGoal(self):
         position, result = self.read("Present_Position")
