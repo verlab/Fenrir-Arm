@@ -42,8 +42,8 @@ $ source devel/setup.bash # Set the appropriate bash extension
 
 ### Driver only (Physical Robot)
 
-<p align="center">
-  <img width="500" src="construction/physical-robot.gif">
+<p align="left">
+  <img width="400" src="construction/physical-robot.gif">
 </p>
 
 After installing the library in your ROS workspace, run:
@@ -54,8 +54,8 @@ $ roslaunch fenrir driver.launch
 
 ### Simulator only (Visualization on RVIZ)
 
-<p align="center">
-  <img width="500" src="construction/urdf_arm.gif">
+<p align="left">
+  <img width="400" src="construction/urdf_arm.gif">
 </p>
 
 ```sh
