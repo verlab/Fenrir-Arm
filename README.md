@@ -1,10 +1,10 @@
 # Fenrir Arm
 
-<p align="center">
-  <img width="500" src="construction/urdf_arm.gif">
-</p>
+_A ROS-compatible Robotic Arm using Dynamixels Servo Motors._
 
-A ROS-compatible Robotic Arm using Dynamixels Servo Motors.
+<p align="center">
+  <img width="450" src="construction/fenrir.png">
+</p>
 
 We make available all the necessary 3D parts and libraries for communicating with the arm using a ROS interface.
 
@@ -38,22 +38,31 @@ $ catkin_make # or catkin build
 $ source devel/setup.bash # Set the appropriate bash extension
 ```
 
-
 ## Usage
 
-### Simulator only
+### Driver only (Physical Robot)
 
-```sh
-$ roslaunch fenrir simulator.launch
-```
+<p align="center">
+  <img width="500" src="construction/physical-robot.gif">
+</p>
 
-### Driver only (no RVIZ)
+After installing the library in your ROS workspace, run:
 
 ```sh
 $ roslaunch fenrir driver.launch
 ```
 
-### Driver with RVIZ
+### Simulator only (Visualization on RVIZ)
+
+<p align="center">
+  <img width="500" src="construction/urdf_arm.gif">
+</p>
+
+```sh
+$ roslaunch fenrir simulator.launch
+```
+
+### Driver with Simulator
 
 _This will initialize both the driver for the servos as well as the state publisher and RVIZ for visualization_
 
