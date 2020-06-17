@@ -6,6 +6,8 @@ _A ROS-compatible Robotic Arm using Dynamixels Servo Motors._
   <img width="450" src="construction/fenrir.png">
 </p>
 
+[Videocase](https://www.youtube.com/watch?v=ZB4075G5WaI)
+
 We make available all the necessary 3D parts and libraries for communicating with the arm using a ROS interface.
 
 ## Dependecies
