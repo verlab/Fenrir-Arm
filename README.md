@@ -7,6 +7,7 @@ _A ROS-compatible Robotic Arm using Dynamixels Servo Motors._
 </p>
 
 [Watch it on Youtube](https://www.youtube.com/watch?v=ZB4075G5WaI)
+[Project Page](https://www.verlab.dcc.ufmg.br/fenrir-3d-printed-robotic-arm/)
 
 We make available all the necessary 3D parts and libraries for communicating with the arm using a ROS interface.
 
