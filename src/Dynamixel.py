@@ -258,6 +258,14 @@ class Dynamixel:
         velocity, result = self.read("Present_Velocity")
         if not result:
             return 0.0, False
+        if self.protocol == 2:
+            if (velocity > 2147483648)
+                velocity = velocity - 4294967296
+            velocity = (velocity * 0.229)*2*np.pi/60 # rad/s
+        else:
+            if (velocity > 1024)
+                velocity = 1024 - velocity
+            velocity = (velocity * 0.111)*2*np.pi/60 # rad/s
         return velocity, True
 
     def readCurrent(self):
