@@ -90,8 +90,15 @@ class dynamixel_driver():
     def jointCallback(self, data):
         self.write.acquire()
         for i, name in enumerate(data.name):
-            mode = self.dynamixels[name].read("Operating_Mode")
-            self.dynamixels[name].writeAngle(data.position[i])
+            if self.dynamixels[name].protocol == 2:
+                mode, _ = self.dynamixels[name].read("Operating_Mode")
+            elif self.dynamixels[name].protocol == 1:
+                mode = 1 if (self.dynamixels[name].read("Min_Position")[0] == 0 and
+                             self.dynamixels[name].read("Max_Position")[0] == 0) else 3
+            if mode == 3:
+                self.dynamixels[name].writeAngle(data.position[i])
+            elif mode == 1:
+                self.dynamixels[name].writeVelocity(data.velocity[i])
         self.write.release()
 
     def setDynamixels (self):

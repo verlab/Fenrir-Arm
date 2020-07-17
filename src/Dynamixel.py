@@ -24,6 +24,7 @@ class Dynamixel:
             "Min_Position": ModelFlag(52, 4),
             "Shutdown": ModelFlag(63, 1),
             "Torque_Enabled": ModelFlag(64, 1),
+            "Goal_Velocity": ModelFlag(104, 4),
             "Profile_Acceleration": ModelFlag(108, 4),
             "Profile_Velocity": ModelFlag(112, 4),
             "Goal_Position": ModelFlag(116, 4),
@@ -45,6 +46,8 @@ class Dynamixel:
             "Shutdown": ModelFlag(18, 1),
             "Torque_Enabled": ModelFlag(24, 1),
             "Goal_Position": ModelFlag(30, 2),
+            "Velocity_Limit" : ModelFlag(32, 2),
+            "Goal_Velocity": ModelFlag(32, 2),
             "Torque_Limit": ModelFlag(34, 2),
             "Present_Position": ModelFlag(36, 2),
             "Present_Velocity": ModelFlag(38, 2),
@@ -55,18 +58,22 @@ class Dynamixel:
         }
     }
 
-    angle_limits = {
+    motors_limits = {
         311: {
             "Max_Angle": (2*np.pi),
             "Max_Position": 4095,
+            "Max_Velocity": 24.5323,
             "Min_Angle": 0.0,
-            "Min_Position": 0
+            "Min_Position": 0,
+            "Min_Velocity" : -24.5323
         },
         12: {
             "Max_Angle": (300*np.pi/180),
             "Max_Position": 1023,
+            "Max_Velocity": 6.1784,
             "Min_Angle": 0.0,
-            "Min_Position": 0
+            "Min_Position": 0,
+            "Min_Velocity" : -6.1784
         }
     }
 
@@ -107,11 +114,11 @@ class Dynamixel:
             self.model = Dynamixel.models[dxl_model_number]
 
         self.limits = None
-        if dxl_model_number not in Dynamixel.angle_limits:
+        if dxl_model_number not in Dynamixel.motors_limits:
             print 'Error: Model not configured. Using default model.'
-            self.limits = Dynamixel.angle_limits[311]
+            self.limits = Dynamixel.motors_limits[311]
         else:
-            self.limits = Dynamixel.angle_limits[dxl_model_number]
+            self.limits = Dynamixel.motors_limits[dxl_model_number]
 
         self.goal_pos = 0
         self.max_pos = self.limits["Max_Position"]
@@ -228,6 +235,26 @@ class Dynamixel:
         self.goal_pos = position
         return result
 
+    def writeVelocity(self, vel):
+        min_vel = self.limits['Min_Velocity']
+        max_vel = self.limits['Max_Velocity']
+        if vel < min_vel or vel > max_vel:
+            print "Error: Velocity out of range"
+            return False
+
+        # Convert vel to value
+        if self.protocol == 2:
+            value = np.ceil(vel * (60/(2*np.pi*0.229)))
+
+            # Cap vel to maximum vel set on the dynamixel
+            lim, _ = self.read("Velocity_Limit")
+            value = min(value, lim) if value > 0 else max(value, -lim)
+        elif self.protocol == 1:
+            value = (vel/max_vel)/0.0009775 if vel > 0 else 1024 + (-vel/max_vel)/0.0009775
+
+        result = self.write("Goal_Velocity", value)
+        return result
+
     # Read funcions
 
     def readAngle(self):
@@ -239,7 +266,7 @@ class Dynamixel:
         max_position = self.limits['Max_Position']
         min_position = self.limits['Min_Position']
         ratio = (1.0*position)/abs(max_position-min_position)
-        angle = ratio * max_angle
+        angle = ratio * (max_angle - min_angle)
         return angle, True
 
     def readLoad(self):
