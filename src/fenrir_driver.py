@@ -90,6 +90,7 @@ class dynamixel_driver():
     def jointCallback(self, data):
         self.write.acquire()
         for i, name in enumerate(data.name):
+            mode = self.dynamixels[name].read("Operating_Mode")
             self.dynamixels[name].writeAngle(data.position[i])
         self.write.release()
 
