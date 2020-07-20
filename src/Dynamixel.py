@@ -271,7 +271,8 @@ class Dynamixel:
 
     def readLoad(self):
         if self.protocol == 2:
-            current, result = self.readCurrent()/1000
+            current, result = self.readCurrent()
+            current /= 1000.0
             if not result:
                 return 0.0, False
             load = (current - 0.10949)/0.83885
@@ -288,11 +289,11 @@ class Dynamixel:
         if self.protocol == 2:
             if (velocity > 2147483648):
                 velocity = velocity - 4294967296
-            velocity = (velocity * 0.229)*2*np.pi/60 # rad/s
+            velocity = (velocity * 0.229)*2*np.pi/60.0 # rad/s
         else:
             if (velocity > 1024):
                 velocity = 1024 - velocity
-            velocity = (velocity * 0.111)*2*np.pi/60 # rad/s
+            velocity = (velocity * 0.111)*2*np.pi/60.0 # rad/s
         return velocity, True
 
     def readCurrent(self):
@@ -304,8 +305,8 @@ class Dynamixel:
                 current = current - 65536
             current = current*3.36 # mA
         else:
-            current = None
-        return round(2, current), True
+            current = 0.0
+        return round(current, 2), True
 
     def readVoltage(self):
         voltage, result = self.read("Present_Voltage")
