@@ -117,7 +117,7 @@ class dynamixel_driver():
         # Updating position limit
         printC(INFO, "Updating positions")
         for dyn in self.dynamixels:
-            self.dynamixels[dyn].updateMaxPositions()
+            self.dynamixels[dyn].updateLimits()
 
     def setTorque (self, state=True):
         # Updating torque of motors

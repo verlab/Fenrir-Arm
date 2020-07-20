@@ -46,7 +46,7 @@ class Dynamixel:
             "Shutdown": ModelFlag(18, 1),
             "Torque_Enabled": ModelFlag(24, 1),
             "Goal_Position": ModelFlag(30, 2),
-            "Velocity_Limit" : ModelFlag(32, 2),
+            "Velocity_Limit": ModelFlag(32, 2),
             "Goal_Velocity": ModelFlag(32, 2),
             "Torque_Limit": ModelFlag(34, 2),
             "Present_Position": ModelFlag(36, 2),
@@ -65,7 +65,7 @@ class Dynamixel:
             "Max_Velocity": 24.5323,
             "Min_Angle": 0.0,
             "Min_Position": 0,
-            "Min_Velocity" : -24.5323
+            "Min_Velocity": -24.5323
         },
         12: {
             "Max_Angle": (300*np.pi/180),
@@ -73,7 +73,7 @@ class Dynamixel:
             "Max_Velocity": 6.1784,
             "Min_Angle": 0.0,
             "Min_Position": 0,
-            "Min_Velocity" : -6.1784
+            "Min_Velocity": -6.1784
         }
     }
 
@@ -123,8 +123,10 @@ class Dynamixel:
         self.goal_pos = 0
         self.max_pos = self.limits["Max_Position"]
         self.min_pos = self.limits["Min_Position"]
+        self.max_vel = self.limits["Max_Velocity"]
+        self.min_vel = self.limits["Min_Velocity"]
 
-    def updateMaxPositions(self):
+    def updateLimits(self):
         print("ID %i -> " % self.id),
         pos, result = self.read("Max_Position")
         if result:
@@ -137,6 +139,18 @@ class Dynamixel:
             self.min_pos = pos
         else:
             printC(WARNING, "Error: Could not read min position, using default one")
+
+        if self.protocol == 2:
+            vel, result = self.read("Velocity_Limit")
+            if result:
+                self.max_vel = vel
+                self.min_vel = -vel
+            else:
+                printC(WARNING, "Error: Could not read velocity limit, using default one")
+
+        print("ANGLE:")
+        printC(RANGE, "%s %s" % (self.min_vel, self.max_vel))
+        print("VELOCITY:")
         printC(RANGE, "%s %s" % (self.min_pos, self.max_pos))
 
     def write(self, flag, value):
@@ -244,13 +258,13 @@ class Dynamixel:
 
         # Convert vel to value
         if self.protocol == 2:
-            value = np.ceil(vel * (60/(2*np.pi*0.229)))
+            value = int(np.ceil(vel * (60/(2*np.pi*0.229))))
 
             # Cap vel to maximum vel set on the dynamixel
-            lim, _ = self.read("Velocity_Limit")
-            value = min(value, lim) if value > 0 else max(value, -lim)
+            value = min(value, self.max_vel) if value > 0 else max(value, self.min_vel)
         elif self.protocol == 1:
-            value = (vel/max_vel)/0.0009775 if vel > 0 else 1024 + (-vel/max_vel)/0.0009775
+            value = int(np.ceil((vel/max_vel)/0.0009775)) if vel > 0 else 1024 + \
+                int(np.ceil((-vel/max_vel)/0.0009775))
 
         result = self.write("Goal_Velocity", value)
         return result
@@ -289,11 +303,11 @@ class Dynamixel:
         if self.protocol == 2:
             if (velocity > 2147483648):
                 velocity = velocity - 4294967296
-            velocity = (velocity * 0.229)*2*np.pi/60.0 # rad/s
+            velocity = (velocity * 0.229)*2*np.pi/60.0  # rad/s
         else:
             if (velocity > 1024):
                 velocity = 1024 - velocity
-            velocity = (velocity * 0.111)*2*np.pi/60.0 # rad/s
+            velocity = (velocity * 0.111)*2*np.pi/60.0  # rad/s
         return velocity, True
 
     def readCurrent(self):
@@ -303,7 +317,7 @@ class Dynamixel:
                 return 0.0, False
             if (current > 32768):
                 current = current - 65536
-            current = current*3.36 # mA
+            current = current*3.36  # mA
         else:
             current = 0.0
         return round(current, 2), True
