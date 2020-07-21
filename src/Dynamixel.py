@@ -307,7 +307,7 @@ class Dynamixel:
         min_position = self.limits['Min_Position']
         ratio = (1.0*position)/abs(max_position-min_position)
         angle = ratio * (max_angle - min_angle)
-        return angle, True
+        return round(angle, 6), True
 
     def readLoad(self):
         if self.protocol == 2:
@@ -320,7 +320,7 @@ class Dynamixel:
             load, result = self.read("Present_Load")
             if not result:
                 return 0.0, False
-        return load, True
+        return round(load, 6), True
 
     def readVelocity(self):
         velocity, result = self.read("Present_Velocity")
@@ -334,7 +334,7 @@ class Dynamixel:
             if (velocity > 1024):
                 velocity = 1024 - velocity
             velocity = (velocity * 0.111)*2*np.pi/60.0  # rad/s
-        return velocity, True
+        return round(velocity, 6), True
 
     def readCurrent(self):
         if self.protocol == 2:
