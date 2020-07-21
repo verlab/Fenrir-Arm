@@ -90,14 +90,9 @@ class dynamixel_driver():
     def jointCallback(self, data):
         self.write.acquire()
         for i, name in enumerate(data.name):
-            if self.dynamixels[name].protocol == 2:
-                mode, _ = self.dynamixels[name].read("Operating_Mode")
-            elif self.dynamixels[name].protocol == 1:
-                mode = 1 if (self.dynamixels[name].read("Min_Position")[0] == 0 and
-                             self.dynamixels[name].read("Max_Position")[0] == 0) else 3
-            if mode == 3:
+            if self.dynamixels[name].mode == 3:
                 self.dynamixels[name].writeAngle(data.position[i])
-            elif mode == 1:
+            elif self.dynamixels[name].mode == 1:
                 self.dynamixels[name].writeVelocity(data.velocity[i])
         self.write.release()
 
@@ -140,6 +135,7 @@ class dynamixel_driver():
     def run(self):
         self.setDynamixels()
         self.updatePosition()
+        self.setControlMode()
         self.setTorque()
         #rospy.Timer(rospy.Duration(0.5), self.verifyMoving)
         while not rospy.is_shutdown():

@@ -125,6 +125,30 @@ class Dynamixel:
         self.min_pos = self.limits["Min_Position"]
         self.max_vel = self.limits["Max_Velocity"]
         self.min_vel = self.limits["Min_Velocity"]
+        self.mode = 3
+
+    def setControlMode(self):
+        print("ID %i -> " % self.id)
+        if self.protocol == 2:
+            mode, result = self.read("Operating_Mode")
+            if result:
+                if mode in [1, 3]:
+                    self.mode = mode
+                else:
+                    printC(WARNING, "Error: Not specified operation mode,"
+                           "using default position control")
+            else:
+                printC(WARNING, "Error: Could not read operation mode, using"
+                       "default position control")
+        elif self.protocol == 1:
+            self.mode = 1 if (self.max_pos == 0 and self.min_pos == 0) else 3
+        if (self.mode == 1):
+            printC("   |")
+            printC("   `---> Operation mode = 1, using velocity control.")
+        elif (self.mode == 3):
+            printC("   |")
+            printC("   `---> Operation mode = 3, using position control.")
+
 
     def updateLimits(self):
         print("ID %i -> " % self.id),
@@ -146,7 +170,8 @@ class Dynamixel:
                 self.max_vel = vel
                 self.min_vel = -vel
             else:
-                printC(WARNING, "Error: Could not read velocity limit, using default one")
+                printC(
+                    WARNING, "Error: Could not read velocity limit, using default one")
 
         print("ANGLE:")
         printC(RANGE, "%s %s" % (self.min_vel, self.max_vel))
@@ -261,7 +286,8 @@ class Dynamixel:
             value = int(np.ceil(vel * (60/(2*np.pi*0.229))))
 
             # Cap vel to maximum vel set on the dynamixel
-            value = min(value, self.max_vel) if value > 0 else max(value, self.min_vel)
+            value = min(value, self.max_vel) if value > 0 else max(
+                value, self.min_vel)
         elif self.protocol == 1:
             value = int(np.ceil((vel/max_vel)/0.0009775)) if vel > 0 else 1024 + \
                 int(np.ceil((-vel/max_vel)/0.0009775))
