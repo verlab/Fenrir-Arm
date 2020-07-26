@@ -7,6 +7,7 @@ from dynamixel_sdk.packet_handler import *
 from dynamixel_sdk.port_handler import *
 from Dynamixel import Dynamixel
 from fenrir.msg import MotorInfo
+from std_srvs.srv import SetBool
 import serial
 import rospkg
 import rospy
@@ -78,6 +79,7 @@ class dynamixel_driver():
 
         # Instanciate the subscriber and publisher
         rospy.Subscriber("/fenrir/joint_commands", JointState, self.jointCallback)
+        rospy.Service('/fenrir/set_torque', SetBool, self.setTorqueCallback)
         self.pubJointPosition = rospy.Publisher('/fenrir/joint_states', JointState, queue_size=1)
         self.pubJointInfo = rospy.Publisher('/fenrir/joint_info', MotorInfo, queue_size=1)
 
@@ -95,6 +97,10 @@ class dynamixel_driver():
             elif self.dynamixels[name].mode == 1:
                 self.dynamixels[name].writeVelocity(data.velocity[i])
         self.write.release()
+
+    def setTorqueCallback(self, data):
+        self.setTorque(state=data.data)
+        return True, "Setting torque to {}".format(data.data)
 
     def setDynamixels (self):
         self.dynamixels = {}
@@ -116,8 +122,10 @@ class dynamixel_driver():
 
     def setTorque (self, state=True):
         # Updating torque of motors
+        self.write.acquire()
         for key in self.dynamixels:
-            self.dynamixels[key].write("Torque_Enabled", state*1)
+            self.dynamixels[key].write("Torque_Enabled", int(state))
+        self.write.release()
         if state:
             printC(INFO, "Enabling motors torque")
         else:
@@ -131,6 +139,11 @@ class dynamixel_driver():
                 self.is_moving = True
                 return
         self.is_moving = False
+
+    def setControlMode(self):
+        for dyn in self.dynamixels:
+            self.dynamixels[dyn].setControlMode()
+
 
     def run(self):
         self.setDynamixels()

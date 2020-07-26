@@ -19,29 +19,31 @@ def joint_publisher():
     pub = rospy.Publisher('/fenrir/joint_commands', JointState, queue_size=0)
     sub = rospy.Subscriber('/fenrir/joint_states', JointState, state_cb)
     rospy.init_node('joint_publisher', anonymous=False)
-    rate = rospy.Rate(0.05) # 10hz
-    step = 0.01
-    iterations = 2
+    rate = rospy.Rate(1.0) # 10hz
+    step = 0.08
+    iterations = 10
     i = 0
 
     while not rospy.is_shutdown():
         if i >= iterations:
+            _ref.velocity = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # elbow
+            _ref.header.stamp = rospy.Time.now()
+            pub.publish(_ref)
+            rate.sleep()
             break
         if (_ref == []):
             rate.sleep()
             continue
         
         # Compute next position
-        i += 1.0
-        offset = 0.0
         if (i%2):
-            offset = 0.01
+            _ref.velocity =  [0.3, 0.3, 0.3, 0.3, 0.3, 0.3] # elbow
         else:
-            offset = 0.0
-        # _ref.position = [ref_pos[0] + offset, ref_pos[1] + offset, _ref.position[2], _ref.position[3], _ref.position[4], _ref.position[5]]
-        print('Setting elbow velocity to: {} rad/s'.format(offset))
+            _ref.velocity = [-0.3, -0.3, -0.3, -0.3, -0.3, -0.3] # elbow
+        i += 1.0
+        # print('Setting elbow velocity to: {} rad/s'.format(offset))
         # _ref.velocity = [0.0, 0.0, 0.0, 0.0, 0.0, offset] # elbow
-        _ref.velocity = [0.0, 0.0, 0.0, 0.0, offset, 0.0] # elbow
+        # _ref.velocity = [0.0, 0.0, 0.0, 0.0, offset, offset] # elbow
         _ref.header.stamp = rospy.Time.now()
         pub.publish(_ref)
 
