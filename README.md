@@ -3,7 +3,7 @@
 _A ROS-compatible Robotic Arm using Dynamixels Servo Motors._
 
 <p align="center">
-  <img width="450" src="construction/fenrir.png">
+  <img width="450" src="fenrir_driver/construction/fenrir.png">
 </p>
 
 [Watch it on Youtube](https://www.youtube.com/watch?v=ZB4075G5WaI)
