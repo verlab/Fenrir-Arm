@@ -1,0 +1,39 @@
+<launch>
+
+
+    <!-- Launch Gazebo  -->
+    <!-- <include file="$(find fenrir_gazebo)/launch/fenrir_world.launch" />    -->
+    <arg name="urdf_path" default="$(find fenrir_description)/urdf/fenrir.gazebo.urdf"/>
+    <param name="robot_description" command="$(find xacro)/xacro '$(find fenrir_description)/urdf/fenrir.xacro'"/>
+    <!-- ros_control seven dof arm launch file -->
+    <!-- <include file="$(find fenrir_gazebo)/launch/fenrir_gazebo_states.launch" />    -->
+        <!-- convert joint states to TF transforms for rviz, etc -->
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen">
+          <!-- <remap from="/joint_states" to="/fenrir/joint_states" /> -->
+      </node>
+  
+    <!-- ros_control position control dof arm launch file -->
+    <!--<include file="$(find fenrir_gazebo)/launch/fenrir_gazebo_position.launch" />  -->
+  
+    <!-- ros_control trajectory control dof arm launch file -->
+    <!-- <include file="$(find fenrir_gazebo)/launch/fenrir_trajectory_controller.launch" />     -->
+    <!-- <include file="$(find dynamixel_workbench_moveit_bridge)/launch/moveit_bridge.launch" />     -->
+  
+      <!-- moveit launch file -->
+  <!-- <include file="$(find seven_dof_arm_config)/launch/moveit_planning_execution.launch" />  -->
+    <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+    <include file="$(find fenrir_moveit)/launch/move_group.launch">
+        <arg name="allow_trajectory_execution" value="true"/>
+        <arg name="fake_execution" value="false"/>
+        <arg name="info" value="true"/>
+        <arg name="debug" value="false"/>
+        <arg name="load_robot_description" value="false"/>
+      </include>  
+    
+      <!-- Run Rviz and load the default config to see the state of the move_group node -->
+      <include file="$(find fenrir_moveit)/launch/moveit_rviz.launch">
+        <arg name="rviz_config" value="$(find fenrir_moveit)/launch/moveit.rviz"/>
+        <arg name="debug" value="false"/>
+      </include>
+  </launch>

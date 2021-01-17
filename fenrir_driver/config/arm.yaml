@@ -1,0 +1,71 @@
+base_joint:
+  ID: 6
+  Protocol_Version: 2
+  Return_Delay_Time: 0
+  Operating_Mode: 3
+  Profile_Acceleration: 5
+  Profile_Velocity: 5
+  Shutdown: 33
+  Min_Position_Limit: 114
+  Max_Position_Limit: 3981
+  Velocity_Limit: 10
+
+shoulder_joint:
+  ID: 5
+  Protocol_Version: 2
+  Return_Delay_Time: 0
+  Operating_Mode: 3
+  Profile_Acceleration: 5
+  Profile_Velocity: 5
+  Shutdown: 33
+  Min_Position_Limit: 614
+  Max_Position_Limit: 3482
+  Velocity_Limit: 10
+
+# shoulder_joint_shadow:
+#   ID: 4
+#   Protocol_Version: 2
+#   Secondary_ID: 25
+#   Return_Delay_Time: 100
+#   Operating_Mode: 3
+#   Profile_Acceleration: 10
+#   Profile_Velocity: 40
+#   # Velocity_Trajectory:
+#   Shutdown: 33
+#   Drive_Mode: 1
+#   Min_Position_Limit: 614
+#   Max_Position_Limit: 3482
+#   Velocity_Limit: 40
+
+elbow_joint:
+  ID: 3
+  Protocol_Version: 2
+  Return_Delay_Time: 100
+  Operating_Mode: 3
+  Profile_Acceleration: 5
+  Profile_Velocity: 5
+  Shutdown: 33
+  Min_Position_Limit: 484
+  Max_Position_Limit: 3612
+  Velocity_Limit: 10
+
+wrist_joint:
+  ID: 2
+  # Protocol_Version: 1
+  Return_Delay_Time: 0
+  CW_Angle_Limit: 256
+  CCW_Angle_Limit: 768
+  Moving_Speed: 5
+  Max_Torque: 200
+  Torque_Limit: 200
+
+gripper_joint:
+  ID: 1
+  # Protocol_Version: 1
+  Return_Delay_Time: 0
+  CW_Angle_Limit: 340
+  CCW_Angle_Limit: 530
+  Moving_Speed: 1024
+  Max_Torque: 500
+  Torque_Limit: 500
+

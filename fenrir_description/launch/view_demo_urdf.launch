@@ -1,0 +1,16 @@
+<launch>
+    <!-- Fenrir URDF description -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find fenrir_description)/urdf/fenrir.xacro'"/>
+
+    <!-- Simulate joint publish using GUI -->
+    <param name="use_gui" value="true"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+    <!-- Joint values -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+        <param name="publish_frequency" value="30.0"/>
+    </node>
+
+    <!-- Open RVIZ -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find fenrir_description)/urdf/simulation.rviz"/>
+</launch>

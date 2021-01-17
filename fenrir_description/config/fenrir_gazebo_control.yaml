@@ -1,0 +1,64 @@
+fenrir:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+    # Position Controllers ---------------------------------------
+  joint1_position_controller:
+    type: position_controllers/JointPositionController
+    joint: base_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  joint2_position_controller:
+    type: position_controllers/JointPositionController
+    joint: shoulder_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  joint3_position_controller:
+    type: position_controllers/JointPositionController
+    joint: elbow_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}    
+  joint4_position_controller:
+    type: position_controllers/JointPositionController
+    joint: wrist_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}        
+  joint5_position_controller:
+    type: position_controllers/JointPositionController
+    joint: gripper_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}        
+
+  joint_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - base_joint
+      - shoulder_joint
+      - elbow_joint
+      - wrist_joint
+      - gripper_joint
+    constraints:
+        goal_time: 0.6
+        stopped_velocity_tolerance: 0.05
+        base_joint: {trajectory: 0.1, goal: 0.1}
+        shoulder_joint: {trajectory: 0.1, goal: 0.1} 
+        elbow_joint: {trajectory: 0.1, goal: 0.1}
+        wrist_joint: {trajectory: 0.1, goal: 0.1}
+        gripper_joint: {trajectory: 0.1, goal: 0.1}
+    stop_trajectory_duration: 0.5
+    state_publish_rate:  25
+    action_monitor_rate: 10
+
+  joint_group_velocity_controller:
+    type: velocity_controllers/JointGroupVelocityController
+    joints:
+      - base_joint
+      - shoulder_joint
+      - elbow_joint
+      - wrist_joint
+      - gripper_joint
+
+  # gazebo_ros_control:
+  #   pid_gains:
+  #       base_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0, antiwindup: false, publish_state: false}
+  #       shoulder_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0, antiwindup: false, publish_state: false}
+  #       elbow_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0, antiwindup: false, publish_state: false}
+  #       wrist_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0, antiwindup: false, publish_state: false}
+  #       gripper_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0, antiwindup: false, publish_state: false}

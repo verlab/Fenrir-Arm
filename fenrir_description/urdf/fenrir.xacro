@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro"
+       name="fenrir" >
+
+  <xacro:include filename="$(find fenrir_description)/urdf/fenrir_macro.xacro"/>
+
+    <!-- Used for fixing robot to Gazebo / Can be used to attach the arm in another robot-->
+    <link name="world"/>
+
+    <!-- arm -->
+    <xacro:fenrir_arm parent="world">
+        <origin xyz="0 0 0.001" rpy="0 0 0" /> <!--slightly above gazebo plane-->.
+    </xacro:fenrir_arm>
+
+</robot>

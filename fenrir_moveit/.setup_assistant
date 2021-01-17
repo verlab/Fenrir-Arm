@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: fenrir_description
+    relative_path: urdf/fenrir.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/fenrir.srdf
+  CONFIG:
+    author_name: Paulo Rezeck
+    author_email: rezeck@dcc.ufmg.br
+    generated_timestamp: 1610577346

@@ -1,0 +1,29 @@
+<launch>
+    <!-- Launch Gazebo -->
+    <include file="$(find fenrir_description)/launch/fenrir_gazebo.launch" />
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find fenrir_description)/config/fenrir_gazebo_control.yaml" command="load" />
+
+    <!-- controllers -->
+    <!-- <rosparam  command="load" file="$(find fenrir)/config/fenrir_gazebo_control.yaml" /> -->
+
+    <!-- load the controllers -->
+    <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/fenrir" args="joint_state_controller
+        joint1_position_controller
+        joint2_position_controller
+        joint3_position_controller
+        joint4_position_controller
+        joint5_position_controller"/> -->
+
+
+
+    <node ns="/fenrir" name="fenrir_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_trajectory_controller" respawn="false" output="screen" />
+
+    <!-- start_controllers -->
+    <!-- <node ns="/fenrir" name="controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/> -->
+
+    <!-- <node ns="fenrir" name="velocity_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_trajectory_controller" respawn="false" output="screen"/> -->
+    <!-- <node ns="arm" name="velocity_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_group_velocity_controller" respawn="false" output="screen"/> -->
+</launch>

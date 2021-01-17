@@ -16,6 +16,7 @@ We make available all the necessary 3D parts and libraries for communicating wit
 
 -   [ROS Kinect](http://wiki.ros.org/kinetic/Installation)
 -   [Dynamixel SDK](http://wiki.ros.org/dynamixel_sdk)
+- Moveit
 
 ## Installation
 
@@ -44,10 +45,25 @@ $ source devel/setup.bash # Set the appropriate bash extension
 
 ## Usage
 
-### Driver only (Physical Robot)
+### NEW! Tracjectory controller using dynamixel-workbench driver with Moveit!
+How to control fenrir (real-robot) using trajectory control from moveit!
+```sh
+$ roslaunch fenrir_controller dynamixel_controller.launch # Launch driver and interface controllers
+$ roslaunch fenrir_gazebo fenrir_moveit_real.launch # Launch Moveit and RViz
+```
+How to control fenrir (simulated on Gazebo) using trajectory control from moveit!
+```sh
+$ roslaunch fenrir_gazebo fenrir_gazebo_bringup.launch # Launch Moveit and RViz
+```
+<p align="left">
+  <img width="400" src="fenrir_driver/construction/moveit.png">
+</p>
+
+
+### OLDER! Driver only (Physical Robot)
 
 <p align="left">
-  <img width="400" src="construction/physical-robot.gif">
+  <img width="400" src="fenrir_driver/construction/physical-robot.gif">
 </p>
 
 After installing the library in your ROS workspace, run:
@@ -59,7 +75,7 @@ $ roslaunch fenrir driver.launch
 ### Simulator only (Visualization on RVIZ)
 
 <p align="left">
-  <img width="400" src="construction/urdf_arm.gif">
+  <img width="400" src="fenrir_driver/construction/urdf_arm.gif">
 </p>
 
 ```sh

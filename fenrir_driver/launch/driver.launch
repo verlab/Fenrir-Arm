@@ -1,0 +1,9 @@
+<launch>
+    <arg name="config_driver" default="$(find fenrir_driver)/config/arm.yaml"/>
+    <node name="dynamixel_driver" pkg="fenrir_driver" type="fenrir_driver_node.py" output="screen">
+        <param name="port" value="/dev/ttyUSB0"/>
+        <param name="baudrate" type="int" value="1000000"/>
+        <param name="config" value="$(arg config_driver)"/>
+    </node>
+    
+</launch>
